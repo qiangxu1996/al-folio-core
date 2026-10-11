@@ -3,6 +3,7 @@ layout: default
 ---
 <div class="post">
   <header class="post-header">
+  {% comment %}
     <h1 class="post-title">
       {% if site.title == 'blank' %}
         <span class="font-weight-bold">{{ site.first_name }}</span> {{ site.middle_name }}
@@ -15,8 +16,9 @@ layout: default
   </header>
 
   <article>
-    {% if page.profile %}
-      <div class="profile float-{% if page.profile.align == 'left' %}left{% else %}right{% endif %}">
+  {% endcomment %}
+  {% if page.profile %}
+      <div class="grid grid-cols-2 gap-6 ml-8 sm:grid-cols-3 sm:ml-0 md:grid-cols-4">
         {% if page.profile.image %}
           {% assign profile_image_path = page.profile.image | prepend: 'assets/img/' %}
           {% if page.profile.image_circular %}
@@ -32,19 +34,27 @@ layout: default
             cache_bust=true
           %}
         {% endif %}
+        <div class="col-span-2 md:col-span-3 flex flex-col justify-between">
         {% if page.profile.more_info %}
           <div class="more-info">{{ page.profile.more_info }}</div>
         {% endif %}
+        <!-- Social -->
+        {% if page.social %}
+          <div class="social">
+            <div class="contact-icons">{% social_links %}</div>
+          </div>
+        {% endif %}
+        </div>
       </div>
     {% endif %}
+  </header>
 
+  <article>
     <div class="clearfix">{{ content }}</div>
 
     <!-- News -->
     {% if page.announcements and page.announcements.enabled %}
-      <h2>
-        <a href="{{ '/news/' | relative_url }}" style="color: inherit">news</a>
-      </h2>
+      <h2>News</h2>
       {% include news.liquid limit=true %}
     {% endif %}
 
@@ -58,19 +68,8 @@ layout: default
 
     <!-- Selected papers -->
     {% if page.selected_papers %}
-      <h2>
-        <a href="{{ '/publications/' | relative_url }}" style="color: inherit">selected publications</a>
-      </h2>
+      <h2>Publications</h2>
       {% include selected_papers.liquid %}
-    {% endif %}
-
-    <!-- Social -->
-    {% if page.social %}
-      <div class="social">
-        <div class="contact-icons">{% social_links %}</div>
-
-        <div class="contact-note">{{ site.contact_note }}</div>
-      </div>
     {% endif %}
 
     {% if site.newsletter and site.newsletter.enabled and site.footer_fixed %}
@@ -79,6 +78,18 @@ layout: default
       {% else %}
         {% include newsletter.liquid center=true %}
       {% endif %}
+    {% endif %}
+
+    {% if site.data.services %}
+      <h2>Professional Services</h2>
+      {% for service_group in site.data.services %}
+        <strong>{{ service_group.title }}</strong>
+        <ul>
+          {% for item in service_group.items %}
+            <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+      {% endfor %}
     {% endif %}
   </article>
 </div>

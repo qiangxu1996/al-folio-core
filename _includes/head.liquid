@@ -48,12 +48,14 @@
 {% if site.plugins contains 'al_icons' %}
   {% include plugins/al_icons_styles.liquid %}
 {% endif %}
+{% comment %}
 <link
   defer
   rel="stylesheet"
   type="text/css"
   href="{{ site.third_party_libraries.google_fonts.url.fonts }}"
 >
+{% endcomment %}
 
 <!-- Code Syntax Highlighting -->
 <link

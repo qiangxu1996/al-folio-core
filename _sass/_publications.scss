@@ -32,8 +32,6 @@
   }
 
   ol.bibliography {
-    list-style: none;
-    padding: 0;
     margin-top: 0;
 
     li {
@@ -77,6 +75,19 @@
 
       .title {
         font-weight: bolder;
+
+        a {
+          text-decoration: none;
+
+          i::before {
+            color: var(--global-text-color);
+            transition: color 0.2s ease-in-out;
+          }
+
+          &:hover i::before {
+            color: var(--global-hover-color);
+          }
+        }
       }
 
       .author {
